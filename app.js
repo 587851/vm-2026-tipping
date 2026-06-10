@@ -8,7 +8,7 @@ import {
   onSnapshot, query, orderBy, serverTimestamp, Timestamp
 } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-// OMG!!! CONFIG FILA PÅ GITHUBBBB??????  Da går fint, web apien nøkklane til firebase e ikkje hemmelig
+// OMG!!! CONFIG FILA PÅ GITHUBBBB??????  Da går fint, web api nøkklane til firebase e ikkje hemmelig
 const firebaseConfig = {
   apiKey: "AIzaSyBObuELPeZ5t4RGGfyMd9OmKFnKjD_QiGc",
   authDomain: "world-cup-2026-competition.firebaseapp.com",
