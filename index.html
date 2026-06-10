@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="nn">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VM 2026 — Tipp kampane</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="ball">⚽</span>
+      <span>VM 2026 Tipping</span>
+    </div>
+    <nav id="nav" class="nav hidden">
+      <button data-view="games" class="nav-btn active">Kampar</button>
+      <button data-view="leaderboard" class="nav-btn">Toppliste</button>
+      <button data-view="admin" class="nav-btn hidden" id="adminTab">Admin</button>
+      <span class="spacer"></span>
+      <span id="whoami" class="whoami"></span>
+      <button id="logoutBtn" class="ghost">Logg ut</button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- INNLOGGING -->
+    <section id="authView" class="view auth-view">
+      <div class="card auth-card">
+        <h1>VM 2026 Tipping</h1>
+        <p class="muted">Tipp heimesiger, uavgjort eller bortesiger for kvar kamp. 1 poeng for kvart rette tips. Klatre på topplista.</p>
+
+        <div class="tabs">
+          <button id="tabLogin" class="tab active">Logg inn</button>
+          <button id="tabSignup" class="tab">Lag brukar</button>
+        </div>
+
+        <form id="authForm" class="stack">
+          <label>
+            Brukarnamn
+            <input type="text" id="username" autocomplete="username" placeholder="Namnet venene dine ser" required />
+            <small id="nameHint" class="muted hidden">3–20 teikn: bokstavar, tal eller understrek.</small>
+          </label>
+          <label>
+            Passord
+            <input type="password" id="password" autocomplete="current-password" minlength="6" required />
+          </label>
+          <button type="submit" id="authSubmit" class="primary">Logg inn</button>
+          <p id="authError" class="error"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- KAMPAR -->
+    <section id="gamesView" class="view hidden">
+      <div class="view-head">
+        <h2>Kampar</h2>
+        <div class="filters">
+          <select id="roundFilter"><option value="">Alle rundar</option></select>
+          <label class="check"><input type="checkbox" id="onlyOpen" /> Berre opne for tipping</label>
+        </div>
+      </div>
+      <div id="gamesList" class="games"></div>
+      <p id="gamesEmpty" class="muted center hidden">Ingen kampar enno. Administrator må leggje til eller importere kampar.</p>
+    </section>
+
+    <!-- TOPPLISTE -->
+    <section id="leaderboardView" class="view hidden">
+      <div class="view-head"><h2>Toppliste</h2></div>
+      <div class="card chart-card">
+        <h3>Poengutvikling</h3>
+        <div id="chartWrap" class="chart-wrap"></div>
+        <div id="chartLegend" class="chart-legend"></div>
+        <p id="chartEmpty" class="muted center hidden">Ikkje nok ferdigspela kampar enno.</p>
+      </div>
+      <div class="card">
+        <table class="board">
+          <thead><tr><th>#</th><th>Spelar</th><th>Poeng</th><th>Rette</th><th>Tippa</th></tr></thead>
+          <tbody id="boardBody"></tbody>
+        </table>
+        <p id="boardEmpty" class="muted center hidden">Ingen ferdigspela kampar er poengrekna enno.</p>
+      </div>
+    </section>
+
+    <!-- ADMIN -->
+    <section id="adminView" class="view hidden">
+      <div class="view-head"><h2>Admin</h2></div>
+
+      <div class="card">
+        <h3>Importer kampar frå det opne datasettet</h3>
+        <p class="muted">Hentar heile VM-programmet for 2026 (og resultat som er publiserte) frå det gratis openfootball-datasettet. Trygt å køyre fleire gonger — det oppdaterer kampar og resultat utan å lage duplikat, og rører ikkje kampar du har lagt til manuelt.</p>
+        <button id="importBtn" class="primary">Importer / oppdater kampar og resultat</button>
+        <span id="importStatus" class="muted"></span>
+      </div>
+
+      <div class="card">
+        <h3>Legg til ein kamp manuelt</h3>
+        <form id="addGameForm" class="grid2">
+          <label>Heimelag<input id="ag_team1" required /></label>
+          <label>Bortelag<input id="ag_team2" required /></label>
+          <label>Gruppe / runde<input id="ag_round" placeholder="Gruppe A" /></label>
+          <label>Kampstart (di lokale tid)<input id="ag_kickoff" type="datetime-local" required /></label>
+          <label class="check full"><input type="checkbox" id="ag_knockout" /> Sluttspelkamp (ingen uavgjort)</label>
+          <button class="primary" type="submit">Legg til kamp</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>Legg inn / endre resultat</h3>
+        <p class="muted">Set sluttresultatet. Utfallet (heimesiger / uavgjort / bortesiger) blir rekna ut automatisk, og alle får poeng. For sluttspelkampar: skriv inn resultatet som avgjer kampen (etter ekstraomgangar / straffer).</p>
+        <div id="adminGames" class="admin-games"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
